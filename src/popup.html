@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rephraser</title>
+  <link rel="stylesheet" href="pages.css">
+  <style>
+    body { width: 380px; padding: 12px; display: grid; gap: 10px; font-size: 13px; }
+    header { display: flex; align-items: center; justify-content: space-between; }
+    .brand img { width: 22px; height: 22px; }
+    .brand b { font-size: 15px; }
+    .card { padding: 12px; }
+    #setup { border-color: var(--accent); background: var(--accent-soft); }
+    #input { min-height: 78px; }
+    #output {
+      white-space: pre-wrap; overflow-wrap: anywhere; background: var(--soft); border-radius: 8px;
+      padding: 9px 10px; max-height: 170px; overflow: auto; margin-top: 8px; font-size: 13.5px;
+    }
+    #output.err { color: var(--danger); }
+    .row select { flex: 1; min-width: 0; width: auto; }
+    .site { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .site .host { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+    #history { display: grid; gap: 6px; max-height: 210px; overflow: auto; margin-top: 8px; }
+    .item {
+      display: block; width: 100%; height: auto; min-height: 0; text-align: start; padding: 7px 9px; white-space: normal;
+      font-weight: 400;
+    }
+    .item .top { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11.5px; }
+    .item .text {
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      overflow-wrap: anywhere; margin-top: 2px;
+    }
+    .between { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><img src="../icons/icon48.png" alt=""><b>Rephraser</b></div>
+    <button id="openOptions" type="button">Settings</button>
+  </header>
+
+  <section id="setup" class="card" hidden>
+    <p><b>Add your Claude API key to get started.</b></p>
+    <p class="muted" style="margin:4px 0 10px">Rephraser uses your own key from the Claude Console.</p>
+    <button id="setupBtn" type="button" class="primary">Open settings</button>
+  </section>
+
+  <section id="siteCard" class="card site" hidden>
+    <div style="min-width:0">
+      <div class="host" id="host"></div>
+      <div class="muted" id="siteState"></div>
+    </div>
+    <button id="siteToggle" type="button"></button>
+  </section>
+
+  <section class="card">
+    <label class="label" for="input">Quick rewrite</label>
+    <textarea id="input" placeholder="Type or paste text…" style="margin-top:6px"></textarea>
+    <div class="row" style="margin-top:8px; flex-wrap:nowrap">
+      <select id="mode" aria-label="Mode"></select>
+      <button id="go" type="button" class="primary">Rewrite</button>
+    </div>
+    <div id="output" dir="auto" hidden aria-live="polite"></div>
+    <div class="between" id="outputBar" hidden style="margin-top:8px">
+      <span class="muted" id="outMeta"></span>
+      <button id="copyOut" type="button">Copy</button>
+    </div>
+  </section>
+
+  <section class="card" id="historyCard" hidden>
+    <div class="between">
+      <span class="label">Recent rewrites</span>
+      <button id="clearHistory" type="button" class="link">Clear</button>
+    </div>
+    <div id="history"></div>
+    <p class="muted" style="margin-top:6px">Click an entry to copy it.</p>
+  </section>
+
+  <script src="shared.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

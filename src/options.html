@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rephraser settings</title>
+  <link rel="stylesheet" href="pages.css">
+  <style>
+    main { max-width: 720px; margin: 0 auto; padding: 28px 16px 48px; display: grid; gap: 16px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    #key { flex: 1; min-width: 220px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    ol { margin: 6px 0 0; padding-left: 20px; }
+    #saved { transition: opacity .2s; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="brand">
+        <img src="../icons/icon48.png" alt="">
+        <h1>Rephraser settings</h1>
+      </div>
+      <span id="saved" class="note ok" role="status" aria-live="polite"></span>
+    </header>
+
+    <section class="card">
+      <h2>Claude API key</h2>
+      <div class="field">
+        <label for="key">API key</label>
+        <div class="row">
+          <input id="key" type="password" placeholder="sk-ant-…" autocomplete="off" spellcheck="false">
+          <button id="toggleKey" type="button" aria-pressed="false">Show</button>
+          <button id="saveKey" type="button" class="primary">Save &amp; test</button>
+          <button id="removeKey" type="button">Remove</button>
+        </div>
+        <p id="keyStatus" class="note" role="status" aria-live="polite"></p>
+      </div>
+      <p class="muted">
+        Rephraser calls the Claude API directly from your browser with your own key, billed to your
+        Claude Console account. A claude.ai chat subscription (Pro, Max) does not include API access.
+      </p>
+      <ol class="muted">
+        <li>Open <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener">platform.claude.com → API keys</a> and create a key.</li>
+        <li>Paste it above and choose <b>Save &amp; test</b>.</li>
+      </ol>
+      <p class="muted" style="margin-top:8px">
+        The key is stored only in this browser profile and is sent only to api.anthropic.com.
+        Web pages cannot read it.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Rewriting</h2>
+      <div class="grid2">
+        <div class="field">
+          <label for="model">Model</label>
+          <select id="model"></select>
+        </div>
+        <div class="field">
+          <label for="defaultMode">Default mode</label>
+          <select id="defaultMode"></select>
+        </div>
+        <div class="field">
+          <label for="outputLang">Output language</label>
+          <select id="outputLang"></select>
+        </div>
+        <div class="field">
+          <label for="theme">Panel theme</label>
+          <select id="theme">
+            <option value="auto">Match system</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label for="customInstructions">Your style preferences (optional)</label>
+        <textarea id="customInstructions" maxlength="1000" placeholder="Example: British spelling. Never use exclamation marks. Keep product names in English."></textarea>
+        <p class="muted">Applied to every rewrite, in every mode.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>On web pages</h2>
+      <label class="check">
+        <input id="selectionIcon" type="checkbox">
+        <span><b>Show the icon when I select text</b><br><span class="muted">Click it to rewrite the selection with your default mode.</span></span>
+      </label>
+      <label class="check">
+        <input id="fieldIcon" type="checkbox">
+        <span><b>Show the icon inside text fields</b><br><span class="muted">Appears at the right edge of the focused field once it contains some text.</span></span>
+      </label>
+      <div class="field" style="margin-top:14px">
+        <label for="disabledSites">Sites where Rephraser stays hidden</label>
+        <textarea id="disabledSites" spellcheck="false" placeholder="One host per line, for example:&#10;docs.google.com&#10;bank.example.com"></textarea>
+        <p class="muted">Shortcuts and the right-click menu keep working on these sites.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>History</h2>
+      <label class="check">
+        <input id="saveHistory" type="checkbox">
+        <span><b>Keep my last 50 rewrites</b><br><span class="muted">Stored only on this device; shown in the toolbar popup.</span></span>
+      </label>
+      <div class="row">
+        <button id="clearHistory" type="button">Clear history</button>
+        <span id="historyStatus" class="note" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Keyboard shortcuts</h2>
+      <p class="muted">
+        <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> paraphrase ·
+        <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> humanize ·
+        <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> fix grammar ·
+        <kbd>Esc</kbd> close the panel.
+        They act on the selection, or on the whole focused field when nothing is selected.
+        Change them at <button id="shortcuts" type="button" class="link">chrome://extensions/shortcuts</button>.
+      </p>
+    </section>
+  </main>
+  <script src="shared.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
